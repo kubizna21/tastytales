@@ -2,6 +2,7 @@
   
   const mongoose = require('mongoose');
   const config = require('config');
+  // Question How do we remove the password from mongoURI
   const db = config.get('mongoURI');
   
   const connectDB = async () => {
