@@ -1,0 +1,4 @@
+{
+    "mongoURI":
+    "mongodb+srv://tasty:dbtrayieMQl8T5KN@cluster0.miyvb0y.mongodb.net/?retryWrites=true&w=majority"
+  }
