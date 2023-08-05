@@ -14,10 +14,10 @@ router.get('/test',(req,res) => res.send('recipe route testing!'));
 // @route GET api/recipe/:id
 // @description Get single recipe by id
 // @access Public
-router.get(':id',(req,res)=> {
-    Recipe.findById(req.params.id)
+router.get('/',(req,res)=> {
+    Recipe.find()
     .then(recipe =>res.json(recipe))
-    .catch(err => res.status(404).json({noRecipeFound: 'No recipe Found'}));
+    .catch(err => res.status(404).json({noRecipeFound: 'No Recipes Found'}));
 });
 
 // @route GET api/recipe
