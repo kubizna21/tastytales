@@ -29,16 +29,17 @@ router.get('/:id', (req,res) => {
     .catch(err => res.status(404).json({noRecipeFound: 'No Recipe Found'}));
 });
 
-// @route GET api/recipe
+// @route POST api/recipe
 // @description add/save recipe
 // @access Public
 router.post('/',(req,res) => {
     Recipe.create(req.body)
     .then(recipe => res.json({msg:'Recipe added successfully'}))
-    .catch(err => res.status(400).json({error: 'Unableto add this recipe'}));
+    .catch(err => res.status(400).json({error: err}));
+
 });
 
-// @route GET api/recipe/:id
+// @route PUT api/recipe/:id
 // @description Update recipe
 // @access Public
 router.put('/:id', (req,res) => {
