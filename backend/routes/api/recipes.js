@@ -17,7 +17,9 @@ router.get('/test',(req,res) => res.send('recipe route testing!'));
 router.get('/',(req,res)=> {
     Recipe.find()
     .then(recipe =>res.json(recipe))
-    .catch(err => res.status(404).json({noRecipeFound: 'No Recipes Found'}));
+    .catch(err => {
+        res.status(404).json({noRecipeFound: 'No Recipes Found'
+    })});
 });
 
 // @route GET api/recipe

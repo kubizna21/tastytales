@@ -5,7 +5,8 @@ Startup
 ---
 -1st-
 add a ".env" file
-PORT=3000
+PORT=8000
+Note: 3000 is going to be used in the front end
 -2nd pt1-
 create an account in https://www.mongodb.com/atlas/database
 click project 0
