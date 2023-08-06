@@ -12,6 +12,7 @@ click project 0
 ->new project -> name project (next)-> Create Project
 Create a deployment-> Free (create)
 -SAVE->UserName & Password -> Create User -> Finish and Close
-In Overview (Database Deployments) ->connect ->Driver -SAVE (step3)
+In Overview (Database Deployments) ->connect ->Driver -SAVE URL- (Located on step3)
 -2nd pt2-
-default.json -> past code to MONGOURI :"YOUR CODE FROM PT1"
+add a CONNECTION="URL" in .env
+-Note- don't forget to add your password to the URL string

@@ -5,6 +5,9 @@ const connectDB = require('./config/db');
 const recipeRoutes = require('./routes/api/recipes')
 
 const app = express();
+//JSON related issue for UNDEFINED in console.log()
+ app.use(express.json());
+ app.use(express.urlencoded({extended:true}));
 
 // Connect Database
 connectDB();
