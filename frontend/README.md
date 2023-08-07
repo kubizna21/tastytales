@@ -1,3 +1,7 @@
+George Note:
+.env PORT=3000 for frontend
+.env CONNECTIONPORT=8000 for backend (must match backend PORT)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

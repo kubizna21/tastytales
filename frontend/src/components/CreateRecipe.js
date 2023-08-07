@@ -4,9 +4,11 @@ import axios from 'axios';
 
 import { useNavigate } from 'react-router-dom';
 
-function CreateRecipe(props) {
-    //Define the state with use State hook
 
+function CreateRecipe(props) {
+    //PORTCONNECTION TO BACKEND
+    const connectionPort = process.env.REACT_APP_CONNECTIONPORT;
+    //Define the state with use State hook
     const navigate = useNavigate();
     const [recipe, setRecipe] = useState({
         title: '',
@@ -25,7 +27,7 @@ function CreateRecipe(props) {
     }
 
     axios
-        .post(`http://localhost:${process.env.PORT}/recipe`,recipe)
+        .post(`http://localhost:${connectionPort}/recipe`,recipe)
         .then((res) => {
             setRecipe({
                 title: '',
@@ -40,6 +42,7 @@ function CreateRecipe(props) {
             navigate('/');
         })
         .catch((err) => {
+            console.log(connectionPort);
             console.log('Error in CreateBook!');
             console.log('Error: ' + err);
         })
@@ -47,44 +50,46 @@ function CreateRecipe(props) {
     return (
     <div className='CreateRecipe'>
         <div className='container'>
-            <div className='col-md-8 m-auto'>
-                <br/>
-                <Link to='/' className='btn btn-outline-warning float-left'>
-                    Show Recipe List
-                </Link>
-            </div>
-            <div className='col-md-8 m-auto'>
-                <h1 className='display-4 text-center'>Add Recipe</h1>
-                <p className='lead text-center'>Create new Recipe</p>
-
-                <form noValidate onSubmit={onSubmit}>
-                    <div className='form-group'>
-                        <input
-                            type='text'
-                            placeholder='Title of the Recipe'
-                            name='title'
-                            className='form-control'
-                            value={recipe.title}
-                            onChange={onChange}
-                        />
-                    </div>
+            <div className='row'>
+                <div className='col-md-8 m-auto'>
                     <br/>
-                    <div className='form-group'>
+                    <Link to='/' className='btn btn-outline-warning float-left'>
+                        Show Recipe List
+                    </Link>
+                </div>
+                <div className='col-md-8 m-auto'>
+                    <h1 className='display-4 text-center'>Add Recipe</h1>
+                    <p className='lead text-center'>Create new Recipe</p>
+
+                    <form noValidate onSubmit={onSubmit}>
+                        <div className='form-group'>
+                            <input
+                                type='text'
+                                placeholder='Title of the Recipe'
+                                name='title'
+                                className='form-control'
+                                value={recipe.title}
+                                onChange={onChange}
+                            />
+                        </div>
+                        <br/>
+                        <div className='form-group'>
+                            <input
+                                type='text'
+                                placeholder='Author'
+                                name='author'
+                                className='form-control'
+                                value={recipe.author}
+                                onChange={onChange}
+                            />
+                        </div>
+                        {/* ====== NEEDS THE REST OF THE SCHEMA ====== */}
                         <input
-                            type='text'
-                            placeholder='Author'
-                            name='author'
-                            className='form-control'
-                            value={recipe.author}
-                            onChange={onChange}
+                            type='submit'
+                            className='btn btn-outline-warning btn-block mt-4'
                         />
-                    </div>
-                    {/* ====== NEEDS THE REST OF THE SCHEMA ====== */}
-                    <input
-                        type='submit'
-                        className='btn btn-outline-warning btn-block mt-4'
-                    />
-                </form>
+                    </form>
+                </div>        
             </div>
         </div>
     </div> 

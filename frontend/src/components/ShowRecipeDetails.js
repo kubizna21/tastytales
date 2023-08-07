@@ -4,6 +4,9 @@ import '../App.css';
 import axios from 'axios';
 
 function ShowRecipeDetails(props) {
+    //CONNECTION TO BACKEND
+    const connectionPort = process.env.REACT_APP_CONNECTIONPORT;
+
     const [recipe, setRecipe] = useState({});
 
     const { id } = useParams();
@@ -11,7 +14,7 @@ function ShowRecipeDetails(props) {
 
     useEffect(() => {
         axios
-            .get(`http://localhost:${process.env.PORT}/recipe/${id}`)
+            .get(`http://localhost:${connectionPort}/recipe/${id}`)
             .then((res) => {
                 setRecipe(res.data);
             })
@@ -23,15 +26,15 @@ function ShowRecipeDetails(props) {
 
     const onDeleteClick = (id) => {
         axios
-            .delete(`http://localhost:${process.env.PORT}/recipe/${id}`)
+            .delete(`http://localhost:${connectionPort}/recipe/${id}`)
             .then((res) => {
                 navigate('/');
             })
             .catch((err) => {
                 console.log('Error from ShowRecipeDetails_deleteClick');
                 console.log("Error:" + err);
-            })
-    }
+            });
+    };
 
     const RecipeItem = (
         <div>

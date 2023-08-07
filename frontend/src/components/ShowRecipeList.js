@@ -5,10 +5,11 @@ import {Link } from 'react-router-dom';
 import RecipeCard from './RecipeCard';
 
 function ShowRecipeList() {
+    const connectionPort = process.env.REACT_APP_CONNECTIONPORT;
     const [recipes, setRecipe] = useState ([]);
     useEffect(() => {
         axios
-            .get(`http://localhost:${process.env.PORT}/recipe`)
+            .get(`http://localhost:${connectionPort}/recipe`)
             .then((res) => {
                 setRecipe(res.data);
             })

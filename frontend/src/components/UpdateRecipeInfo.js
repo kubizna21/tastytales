@@ -5,6 +5,8 @@ import '../App.css';
 
 
 function UpdateRecipeInfo(props) {
+    //CONNECTION TO BACKEND
+    const connectionPort = process.env.REACT_APP_CONNECTIONPORT;
     const [recipe, setRecipe] = useState({
         title:'',
         author:'',
@@ -18,7 +20,7 @@ function UpdateRecipeInfo(props) {
 
     useEffect(() => {
         axios
-            .get(`http://localhost:${process.env.PORT}/recipe/${id}`)
+            .get(`http://localhost:${connectionPort}/recipe/${id}`)
             .then((res) => {
                 setRecipe({
                     title: res.data.title,
@@ -49,7 +51,7 @@ function UpdateRecipeInfo(props) {
     
 
         axios
-            .put(`http://localhost:${process.env.PORT}/recipe/${id}`, data)
+            .put(`http://localhost:${connectionPort}/recipe/${id}`, data)
             .then((res) => {
                 navigate(`/show-recipe/${id}`);
             })

@@ -15,7 +15,7 @@ const RecipeCard = (props) => {
         />
         <div className='desc'>
             <h2>
-                <Link to={`/show-book/${recipe._id}`}>{recipe.title}</Link>
+                <Link to={`/show-recipe/${recipe._id}`}>{recipe.title}</Link>
             </h2>
             <h3>{recipe.author}</h3>
             {/* <p>{recipe.ingredients}</p> */}
