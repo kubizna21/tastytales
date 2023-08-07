@@ -55,7 +55,7 @@ router.put('/:id', (req,res) => {
 // @route GET api/recipe/:id
 // @description Delete recipe by id
 // @access Public
-router.delete('/:id', (res,req) => {
+router.delete('/:id', (req,res) => {
     Recipe.findByIdAndRemove(req.params.id, req.body)
     .then(recipe => res.json({msg: 'Recipe entry deleted successfully' }))
     .catch(err => res.status(404).json({error: 'Recipe does not exist'}));
