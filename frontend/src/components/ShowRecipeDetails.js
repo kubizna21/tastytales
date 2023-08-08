@@ -55,13 +55,19 @@ function ShowRecipeDetails(props) {
                         <td>Ingredients</td>
                         <td>{recipe.title}</td>
                     </tr>
+                     */}
                     <tr>
-                        <th scope='row'>4</th>
+                        <th scope='row'>3</th>
                         <td>Instructions</td>
-                        <td>{recipe.title}</td>
-                    </tr> */}
-                    
-                </tbody>    
+                        <td>
+                            <ul>
+                                {recipe.instructions?.map((instruction, index) => (
+                                    <li key={index}>{instruction}</li>
+                                ))}
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
             </table>
         </div>
     )
@@ -70,7 +76,7 @@ function ShowRecipeDetails(props) {
             <div className='container'>
                 <div className='row'>
                     <div className='col-md-10 m-auto'>
-                        <br/><br/>
+                        <br /><br />
                         <Link to='/' className='btn btn-outline-warning float-left'>
                             Show Recipe List
                         </Link>
@@ -79,7 +85,7 @@ function ShowRecipeDetails(props) {
                     <div className='col-md-8 m-auto'>
                         <h1>Recipe's Records</h1>
                         <p className='lead text-center'>View Recipe's Info</p>
-                        <hr/> <br/>
+                        <hr /> <br />
                     </div>
                     <div className='col-md-10 m-auto'>{RecipeItem}</div>
                     <div className='col-md-6 m-auto'>

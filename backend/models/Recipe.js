@@ -9,6 +9,10 @@ const RecipeSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    instructions: {
+        type: [String], //Array of strings to store multiple steps in the instructions
+        required: true,
+    },
     // ingredients:{
     //     type: [
     //         {
@@ -19,14 +23,12 @@ const RecipeSchema = new mongoose.Schema({
     //     ],
     //     required: true,
     // },
-    // instructions: {
-    //     type: [String], //Array of strings to store multiple steops in the sinstructions
-    //     required: true,
-    // },
+    
     // image: {
     //     data: Buffer,
     //     contentType: String,
     // },
-});
-var Recipe = mongoose.model('recipe', RecipeSchema);
+},{versionKey:false});
+
+const Recipe = mongoose.model('recipe', RecipeSchema);
 module.exports = Recipe; 

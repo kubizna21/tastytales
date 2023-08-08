@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect} from 'react';
 import {Link, useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -11,7 +12,7 @@ function UpdateRecipeInfo(props) {
         title:'',
         author:'',
         // ingredients:'',
-        // instructions:'',
+         instructions:[],
         // image:'',
     });
 
@@ -25,6 +26,7 @@ function UpdateRecipeInfo(props) {
                 setRecipe({
                     title: res.data.title,
                     author: res.data.author,
+                    instructions: res.data.instructions,
                     // Needs Ingredients, instructions, image
                 });
             })
@@ -35,7 +37,13 @@ function UpdateRecipeInfo(props) {
     }, [id]);
 
     const onChange = (e) => {
-        setRecipe({...recipe, [e.target.name]:e.target.value});
+        if (e.target.name === 'instructions') {
+            // Split the textarea content into an array of instructions
+            const instructionsArray = e.target.value.split('\n');
+            setRecipe({ ...recipe, instructions: instructionsArray });
+        } else {
+            setRecipe({ ...recipe, [e.target.name]: e.target.value });
+        }
     };
 
     const onSubmit = (e) => {
@@ -45,7 +53,7 @@ function UpdateRecipeInfo(props) {
             title: recipe.title,
             author: recipe.author,
             // ingredients: recipe.ingredients,
-            // instructions: recipe.instructions,
+            instructions: recipe.instructions,
             // image: recipe.image,
         }
     
@@ -101,6 +109,20 @@ function UpdateRecipeInfo(props) {
                             />
                         </div>
                         <br/>
+                        {/* Ingredients Is missing*/}
+                        <div>
+                            <label htmlFor='instructions'>Instructions</label>
+                            <textarea
+                                rows='5'
+                                placeholder='Enter recipe instructions'
+                                name='instructions'
+                                className='form-control'
+                                value={recipe.instructions.join('\n')} // Join instructions array with line breaks
+                                onChange={onChange}
+                            />
+                        </div>
+                        <br />
+                        {/* Keep at the end */}
                         <button
                             type='submit'
                             className='btn btn-outline-info btn-lg btn-block'
