@@ -13,14 +13,29 @@ function CreateRecipe(props) {
     const [recipe, setRecipe] = useState({
         title: '',
         author: '',
+        ingredients:[],
         instructions: [],
 
         //Implement this portion later
-        // ingredients: '',
         // image: '',
     })
     const onChange = (e) => {
         setRecipe({ ...recipe, [e.target.name]: e.target.value });
+    };
+    //Ingredients functions
+    const addIngredient = () => {
+        const newIngredient = {
+            name: '',
+            quantity: 0,
+            unit: '',
+        };
+        setRecipe({ ...recipe, ingredients: [...recipe.ingredients, newIngredient] });
+    };
+
+    const updateIngredient = (index, field, value) => {
+        const updatedIngredients = [...recipe.ingredients];
+        updatedIngredients[index][field] = value;
+        setRecipe({ ...recipe, ingredients: updatedIngredients });
     };
 
     //Instructions functions
@@ -47,7 +62,8 @@ function CreateRecipe(props) {
     const newRecipe = {
         title:recipe.title,
         author:recipe.author,
-        instructions: recipe.instructions
+        ingredients: recipe.ingredients,
+        instructions: recipe.instructions,
     }
     //Button on Submit
     const onSubmit = (e) => {
@@ -59,6 +75,7 @@ function CreateRecipe(props) {
                 setRecipe({
                     title: '',
                     author: '',
+                    ingredients: [],
                     instructions: [],
                     //Implement this portion later
                     // ingredients: '',
@@ -70,10 +87,8 @@ function CreateRecipe(props) {
                 navigate('/');
             })
             .catch((err) => {
-                console.log(connectionPort);
                 console.log('Error in CreateBook!');
                 console.log('Error: ' + err);
-                console.log('instructions:'+ newRecipe.instructions[0])
             })    
     }
     
@@ -115,6 +130,47 @@ function CreateRecipe(props) {
                                 />
                             </div>
                             {/* ====== NEEDS THE REST OF THE SCHEMA ====== */}
+                            <div className='form-group'>
+                                <button
+                                    type='button'
+                                    className='btn btn-outline-primary'
+                                    onClick={addIngredient}
+                                >
+                                    Add Ingredient
+                                </button>
+                                {recipe.ingredients.map((ingredient,index)=> (
+                                    <div key={index} className='ingredient-input row'>
+                                        <div className='col-md-4'>
+                                            <input
+                                                type='text'
+                                                placeholder='Ingredient Name'
+                                                value={ingredient.name}
+                                                onChange={(e) => updateIngredient(index, 'name', e.target.value)}
+                                                className='form-control'
+                                            />
+                                        </div>
+                                        <div className='col-md-4'>
+                                            <input
+                                                type='number'
+                                                placeholder='Quantity'
+                                                value={ingredient.quantity}
+                                                onChange={(e) => updateIngredient(index,'quantity', e.target.value)}
+                                                className='form-control'
+                                            />
+                                        </div>
+                                        <div className='col-md-4'>
+                                            <input
+                                                type='text'
+                                                placeholder='Unit'
+                                                value={ingredient.unit}
+                                                onChange={(e) => updateIngredient(index,'unit', e.target.value)}
+                                                className='form-control'
+                                            />
+                                        </div>
+                                    </div>
+                                ))}
+
+                            </div>
                             <div className='form-group'>
                                 <label>Instructions:</label>
                                 {recipe.instructions.map((instruction, index) => (
