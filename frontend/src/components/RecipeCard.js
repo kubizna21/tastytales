@@ -20,6 +20,14 @@ const RecipeCard = (props) => {
             </h2>
             <h3>{recipe.author}</h3>
             {/* <p>{recipe.ingredients}</p> */}
+            <h4>Ingredients:</h4>
+                <ul>
+                    {recipe.ingredients.map((ingredient, index) => (
+                        <li key={index}>
+                            {ingredient.name} - {ingredient.quantity} {ingredient.unit}
+                        </li>
+                    ))}
+                </ul>
             {/* <p>{recipe.instructions}</p> */}
             <div className='instructions'>
                     <h4>Instructions:</h4>

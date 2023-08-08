@@ -38,6 +38,11 @@ function CreateRecipe(props) {
         setRecipe({ ...recipe, ingredients: updatedIngredients });
     };
 
+    const removeIngredient = (index) => {
+        const updatedIngredients = [...recipe.ingredients];
+        updatedIngredients.splice(index,1);
+        setRecipe({...recipe,ingredients:updatedIngredients});
+    }
     //Instructions functions
     const addInstruction = () => {
         setRecipe({
@@ -78,8 +83,6 @@ function CreateRecipe(props) {
                     ingredients: [],
                     instructions: [],
                     //Implement this portion later
-                    // ingredients: '',
-                    // instructions: '',
                     // image: '',
                 });
 
@@ -140,7 +143,7 @@ function CreateRecipe(props) {
                                 </button>
                                 {recipe.ingredients.map((ingredient,index)=> (
                                     <div key={index} className='ingredient-input row'>
-                                        <div className='col-md-4'>
+                                        <div className='col-md-6'>
                                             <input
                                                 type='text'
                                                 placeholder='Ingredient Name'
@@ -149,16 +152,18 @@ function CreateRecipe(props) {
                                                 className='form-control'
                                             />
                                         </div>
-                                        <div className='col-md-4'>
+                                        <div className='col-md-2'>
                                             <input
                                                 type='number'
                                                 placeholder='Quantity'
                                                 value={ingredient.quantity}
                                                 onChange={(e) => updateIngredient(index,'quantity', e.target.value)}
                                                 className='form-control'
+                                                min={0}
+                                                max={100}
                                             />
                                         </div>
-                                        <div className='col-md-4'>
+                                        <div className='col-md-2'>
                                             <input
                                                 type='text'
                                                 placeholder='Unit'
@@ -166,6 +171,16 @@ function CreateRecipe(props) {
                                                 onChange={(e) => updateIngredient(index,'unit', e.target.value)}
                                                 className='form-control'
                                             />
+                                        </div>
+                                        <div className='col-md-2'>
+                                            <button
+                                                type='button'
+                                                className='btn btn-outline-danger btn-sm'
+                                                onClick={() => removeIngredient(index)}
+                                            >
+                                                Remove
+                                            </button>
+
                                         </div>
                                     </div>
                                 ))}

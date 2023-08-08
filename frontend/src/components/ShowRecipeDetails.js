@@ -50,12 +50,20 @@ function ShowRecipeDetails(props) {
                         <td>Author</td>
                         <td>{recipe.Author}</td>
                     </tr>
-                    {/* <tr>
+                    <tr>
                         <th scope='row'>3</th>
                         <td>Ingredients</td>
-                        <td>{recipe.title}</td>
+                        <td>
+                            <ul>
+                                {recipe.ingredients && recipe.ingredients.map((ingredient, index) => (
+                                    <li key={index}>
+                                        {ingredient.name} - {ingredient.quantity} {ingredient.unit}
+                                    </li>
+                                ))}
+                            </ul>
+                        </td>
                     </tr>
-                     */}
+
                     <tr>
                         <th scope='row'>3</th>
                         <td>Instructions</td>
