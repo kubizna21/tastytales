@@ -1,27 +1,40 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
-import './App.css';
+import Search from "./api/Search";
+import Tags from "./api/Tages";
+import Pages from "./pages/Pages";
+import styled from "styled-components"
+import { Link } from "react-router-dom";
+import { GiKnifeFork } from "react-icons/gi";
+import { BrowserRouter } from 'react-router-dom'
 
-import CreateRecipe from './components/CreateRecipe';
-
-import ShowRecipeDetails from './components/ShowRecipeDetails';
-import ShowRecipeList from './components/ShowRecipeList';
-import UpdateRecipeInfo from './components/UpdateRecipeInfo';
 
 function App() {
   return (
-    <Router>
-      <div>
-        <Routes>
-          <Route exact path='/' element={<ShowRecipeList/>}/>
-          <Route path='/create-recipe' element={<CreateRecipe/>}/>
-          <Route path='/edit-recipe/:id' element={<UpdateRecipeInfo/>}/>
-          <Route path='/show-recipe/:id' element={<ShowRecipeDetails/>}/>
-        </Routes>  
-      </div>
-      
-    </Router>
-
+    <div className="App">
+      <BrowserRouter>
+      <Nav>
+        <GiKnifeFork />
+        <Logo to={'/'}>Home</Logo>
+      </Nav>
+      <Search />
+      <Tags />
+     <Pages />
+     </BrowserRouter>
+    </div>
   );
 }
-
+const Logo = styled(Link)`
+  text-decoration: none;
+  font-size: 1.5rem;
+  font-weight: 400;
+  font-family: 'Lobster two', cursive;
+`
+const Nav = styled.div`
+  padding: 4rem 0rem;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  svg{
+    font-size: 2rem;
+  }
+`
 export default App;
