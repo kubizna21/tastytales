@@ -1,5 +1,6 @@
-import React, { useState, useEffect} from 'react';
-import {Link, useParams, useNavigate } from 'react-router-dom';
+
+import React, { useState, useEffect } from 'react';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../App.css';
 
@@ -8,10 +9,10 @@ function UpdateRecipeInfo(props) {
     //CONNECTION TO BACKEND
     const connectionPort = process.env.REACT_APP_CONNECTIONPORT;
     const [recipe, setRecipe] = useState({
-        title:'',
-        author:'',
-        // ingredients:'',
-        // instructions:'',
+        title: '',
+        author: '',
+        ingredients: [],
+        instructions: [],
         // image:'',
     });
 
@@ -25,6 +26,8 @@ function UpdateRecipeInfo(props) {
                 setRecipe({
                     title: res.data.title,
                     author: res.data.author,
+                    ingredients: res.data.ingredients,
+                    instructions: res.data.instructions,
                     // Needs Ingredients, instructions, image
                 });
             })
@@ -35,7 +38,25 @@ function UpdateRecipeInfo(props) {
     }, [id]);
 
     const onChange = (e) => {
-        setRecipe({...recipe, [e.target.name]:e.target.value});
+        if (e.target.name === 'instructions') {
+            // Split the textarea content into an array of instructions
+            const instructionsArray = e.target.value.split('\n');
+            setRecipe({ ...recipe, instructions: instructionsArray });
+        } else {
+            setRecipe({ ...recipe, [e.target.name]: e.target.value });
+        }
+    };
+
+    const updateIngredient = (index, field, value) => {
+        const updatedIngredients = [...recipe.ingredients];
+        updatedIngredients[index][field] = value;
+        setRecipe({ ...recipe, ingredients: updatedIngredients });
+    };
+
+    const removeIngredient = (index) => {
+        const updatedIngredients = [...recipe.ingredients];
+        updatedIngredients.splice(index, 1);
+        setRecipe({ ...recipe, ingredients: updatedIngredients });
     };
 
     const onSubmit = (e) => {
@@ -44,11 +65,11 @@ function UpdateRecipeInfo(props) {
         const data = {
             title: recipe.title,
             author: recipe.author,
-            // ingredients: recipe.ingredients,
-            // instructions: recipe.instructions,
+            ingredients: recipe.ingredients,
+            instructions: recipe.instructions,
             // image: recipe.image,
         }
-    
+
 
         axios
             .put(`http://localhost:${connectionPort}/recipe/${id}`, data)
@@ -86,9 +107,9 @@ function UpdateRecipeInfo(props) {
                                 className='form-control'
                                 value={recipe.title}
                                 onChange={onChange}
-                            />  
+                            />
                         </div>
-                        <br/>
+                        <br />
                         <div>
                             <label htmlFor='author'>Author</label>
                             <input
@@ -100,7 +121,81 @@ function UpdateRecipeInfo(props) {
                                 onChange={onChange}
                             />
                         </div>
-                        <br/>
+                        <br />
+                        {/* Ingredients Portion*/}
+                        <div className='form-group'>
+                                <h4>Ingredients:</h4>
+                                {recipe.ingredients.map((ingredient, index) => (
+                                    <div key={index} className='ingredient-input row'>
+                                        <div className='col-md-4'>
+                                            <input
+                                                type='text'
+                                                placeholder='Ingredient Name'
+                                                value={ingredient.name}
+                                                onChange={(e) => updateIngredient(index, 'name', e.target.value)}
+                                                className='form-control'
+                                            />
+                                        </div>
+                                        <div className='col-md-3'>
+                                            <input
+                                                type='number'
+                                                placeholder='Quantity'
+                                                value={ingredient.quantity}
+                                                onChange={(e) => updateIngredient(index, 'quantity', e.target.value)}
+                                                className='form-control'
+                                            />
+                                        </div>
+                                        <div className='col-md-3'>
+                                            <input
+                                                type='text'
+                                                placeholder='Unit'
+                                                value={ingredient.unit}
+                                                onChange={(e) => updateIngredient(index, 'unit', e.target.value)}
+                                                className='form-control'
+                                            />
+                                        </div>
+                                        <div className='col-md-2'>
+                                            <button
+                                                type='button'
+                                                className='btn btn-danger'
+                                                onClick={() => removeIngredient(index)}
+                                            >
+                                                Remove
+                                            </button>
+                                        </div>
+                                    </div>
+                                ))}
+                                <button
+                                    type='button'
+                                    className='btn btn-success mt-3'
+                                    onClick={() =>
+                                        setRecipe({
+                                            ...recipe,
+                                            ingredients: [
+                                                ...recipe.ingredients,
+                                                { name: '', quantity: 0, unit: '' },
+                                            ],
+                                        })
+                                    }
+                                >
+                                    Add Ingredient
+                                </button>
+                            </div>
+
+                        <br />
+                        <div>
+                            <label htmlFor='instructions'>Instructions</label>
+                            <textarea
+                                rows='5'
+                                placeholder='Enter recipe instructions'
+                                name='instructions'
+                                className='form-control'
+                                value={recipe.instructions.join('\n')} // Join instructions array with line breaks
+                                onChange={onChange}
+                            />
+                        </div>
+                        <br />
+                        {/* Keep at the end */}
                         <button
                             type='submit'
                             className='btn btn-outline-info btn-lg btn-block'
