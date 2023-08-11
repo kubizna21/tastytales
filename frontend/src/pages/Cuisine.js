@@ -3,6 +3,11 @@ import styled from "styled-components"
 import {motion} from 'framer-motion'
 import {Link, useParams} from 'react-router-dom'
 // useParams allows to pull they keyWord from the url
+
+
+
+
+
 function Cuisine() {
 
     const [cuisine, setCuisne] = useState([])
